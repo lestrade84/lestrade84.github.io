@@ -10,6 +10,7 @@ url:              http://lestrade84.github.io
 permalink:   /:categories/:title/
 markdown:    kramdown
 highlighter: pygments
+safe: false
 sass:
   sass_dir: _sass
   style: compressed
@@ -22,7 +23,6 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   use_coderay: false
-
 
 # Site owner
 owner:
