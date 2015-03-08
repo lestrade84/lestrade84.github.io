@@ -1,0 +1,628 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if (IE 7)&!(IEMobile)]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if (IE 8)&!(IEMobile)]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Improving log-analysis capabilities with logstash + elasticsearch + kibana &#8211; Carlos Spitzer's Blog</title>
+<meta name="description" content="
+  
+    Overview
+  
+
+
+  
+
+
+
+">
+<meta name="keywords" content="elk, elasticsearch, logstash, kibana">
+
+  
+
+<!-- Twitter Cards -->
+<meta name="twitter:title" content="Improving log-analysis capabilities with logstash + elasticsearch + kibana">
+<meta name="twitter:description" content="
+  
+    Overview
+  
+
+
+  
+
+
+
+">
+<meta name="twitter:site" content="@lestrade84">
+<meta name="twitter:creator" content="@lestrade84">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/images/elk-banner.jpg">
+
+<!-- Open Graph -->
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Improving log-analysis capabilities with logstash + elasticsearch + kibana">
+<meta property="og:description" content="
+  
+    Overview
+  
+
+
+  
+
+
+
+">
+<meta property="og:url" content="/elk/">
+<meta property="og:site_name" content="Carlos Spitzer's Blog">
+
+
+
+
+
+<link rel="canonical" href="/elk/">
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Carlos Spitzer's Blog Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+
+<!-- HTML5 Shiv and Media Query Support -->
+<!--[if lt IE 9]>
+	<script src="/assets/js/vendor/html5shiv.min.js"></script>
+	<script src="/assets/js/vendor/respond.min.js"></script>
+<![endif]-->
+
+<!-- Modernizr -->
+<script src="/assets/js/vendor/modernizr-2.7.1.custom.min.js"></script>
+
+<link href='//fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700%7CPT+Serif:400,700,400italic' rel='stylesheet' type='text/css'>
+
+<!-- Icons -->
+<!-- 16x16 -->
+<link rel="shortcut icon" href="/favicon.ico">
+<!-- 32x32 -->
+<link rel="shortcut icon" href="/favicon.png">
+<!-- 57x57 (precomposed) for iPhone 3GS, pre-2011 iPod Touch and older Android devices -->
+<link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+<!-- 72x72 (precomposed) for 1st generation iPad, iPad 2 and iPad mini -->
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/images/apple-touch-icon-72x72-precomposed.png">
+<!-- 114x114 (precomposed) for iPhone 4, 4S, 5 and post-2011 iPod Touch -->
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/apple-touch-icon-114x114-precomposed.png">
+<!-- 144x144 (precomposed) for iPad 3rd and 4th generation -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/images/apple-touch-icon-144x144-precomposed.png">
+
+</head>
+
+<body class="post">
+
+<!--[if lt IE 9]><div class="browser-upgrade alert alert-info">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
+
+<div class="navigation-wrapper">
+	<div class="site-name">
+		<a href="/">Carlos Spitzer's Blog</a>
+	</div><!-- /.site-name -->
+	<div class="top-navigation">
+		<nav role="navigation" id="site-nav" class="nav">
+		    <ul>
+		        
+				    
+				        
+				    
+				    <li><a href="/posts/" >Posts</a></li>
+				
+				    
+				        
+				    
+				    <li><a href="/about/" >About</a></li>
+				
+		    </ul>
+		</nav>
+	</div><!-- /.top-navigation -->
+</div><!-- /.navigation-wrapper -->
+
+
+  <div class="image-wrap">
+  <img src=
+    
+      "/images/elk-banner.jpg"
+    
+  alt="Improving log-analysis capabilities with logstash + elasticsearch + kibana feature image">
+  
+  </div><!-- /.image-wrap -->
+
+
+<div id="main" role="main">
+  <div class="article-author-side">
+    
+  
+
+<div itemscope itemtype="http://schema.org/Person">
+
+
+	<img src="/images/bio-photo-2.jpg" class="bio-photo" alt="Carlos Spitzer bio photo">
+
+
+  <h3 itemprop="name">Carlos Spitzer</h3>
+  <p>Senior Consultant at Red Hat</p>
+  <a href="mailto:me@carlos-spitzer.com" class="author-social" target="_blank"><i class="fa fa-fw fa-envelope-square"></i> Email</a>
+  <a href="http://twitter.com/lestrade84" class="author-social" target="_blank"><i class="fa fa-fw fa-twitter-square"></i> Twitter</a>
+  
+  <a href="http://plus.google.com/+CarlosSpitzerLopez" class="author-social" target="_blank"><i class="fa fa-fw fa-google-plus-square"></i> Google+</a>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</div>
+  </div>
+  <article class="post">
+    <div class="headline-wrap">
+      
+        <h1><a href="/elk/" rel="bookmark" title="Improving log-analysis capabilities with logstash + elasticsearch + kibana">Improving log-analysis capabilities with logstash + elasticsearch + kibana</a></h1>
+      
+    </div><!--/ .headline-wrap -->
+    <div class="article-wrap">
+      <section id="table-of-contents" class="toc">
+  <header>
+    <h3>Overview</h3>
+  </header>
+<div id="drawer">
+<ul id="markdown-toc">
+  <li><a href="#how-elk-works" id="markdown-toc-how-elk-works">How ELK works?</a></li>
+  <li><a href="#installing-and-configuring-our-first-elk-environment" id="markdown-toc-installing-and-configuring-our-first-elk-environment">Installing and configuring our first ELK environment</a>    <ul>
+      <li><a href="#installing-and-configuring-elasticsearch" id="markdown-toc-installing-and-configuring-elasticsearch">Installing and configuring Elasticsearch</a></li>
+      <li><a href="#installing-and-configuring-kibana" id="markdown-toc-installing-and-configuring-kibana">Installing and configuring Kibana</a></li>
+      <li><a href="#installing-and-configuring-logstash" id="markdown-toc-installing-and-configuring-logstash">Installing and configuring Logstash</a></li>
+      <li><a href="#install-and-configure-logstash-forwarder-on-your-hostsclients" id="markdown-toc-install-and-configure-logstash-forwarder-on-your-hostsclients">Install and configure logstash-forwarder on your hosts/clients</a></li>
+    </ul>
+  </li>
+  <li><a href="#are-you-a-jboss-eap-admin" id="markdown-toc-are-you-a-jboss-eap-admin">Are you a JBoss EAP admin?</a></li>
+  <li><a href="#deep-dive" id="markdown-toc-deep-dive">Deep dive</a></li>
+</ul>
+
+  </div>
+</section>
+<!-- /#table-of-contents -->
+
+<p>A few months ago I started to play with ELK deployments (<a href="http://www.elasticsearch.com/products/elasticsearch/" target="_blank">Elasticsearch</a> + <a href="http://www.elasticsearch.org/overview/logstash/" target="_blank">Logstash</a> + <a href="http://www.elasticsearch.org/overview/kibana/" target="_blank">Kibana</a>) and I wrote a series of posts where I explained how to build an RPM package for elasticsearch and logstash, install and configure Kibana and how to redirect logs to be processed by logstash filters, exploited by elasticsearch and presented on Kibana web interface.</p>
+
+<p>Today, ELK ecosystem has improved a lot and when I mean a lot is a LOT. Probably this project is starting to be ‘a must’ for any company or customer who wants to centralize and exploit their logs, for example grouping, analyzing and creating business rules with them. I have no doubt that this can be consider an standard for interpreting and centralize logs.</p>
+
+<p>To get introduced with this technology, I suggest you to take a deep look to the project website to understand what ELK is and how it works. You can watch the next video to get some feedback:</p>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/afePnzpB1F4" frameborder="0"></iframe>
+<p><br /></p>
+
+<h2 id="how-elk-works">How ELK works?</h2>
+<p>The following diagram shows how this ecosystem works:</p>
+<figure><img src="/images/elk-flow.jpg" /></figure>
+
+<ul>
+  <li>The logstash-forwarder reads as many local log files as you want to configure for and send them to the logstash server (port 5000) encrypted, using the logstash certification file.</li>
+  <li>The logstash server receives the logs and process the different queues to store the data in the local folders.</li>
+  <li>Elasticsearch performs different operations (optimize the data structures, create search indexes, group information…) to create a better experience accessing to the information.</li>
+  <li>Kibana reads logstash data structures and present them to the users using custom layouts, dashboards and filters.
+This is pretty much how these different OpenSource projects work together. Of course, this is a very high-level diagram and there is a huge world on each project. In this post we are going to see how to install and configure a single RHEL 7 ELK server to centralize and exploit our logs and how to prepare the log-clients to use logstash-forwarder to send the logs to the ELK server.
+<br /></li>
+</ul>
+<hr align="center" noshade="noshade" size="2" width="100%" />
+
+<h2 id="installing-and-configuring-our-first-elk-environment">Installing and configuring our first ELK environment</h2>
+<p>### Preparing stuff
+I’ve chosen <a href="http://www.redhat.com/es/technologies/linux-platforms/enterprise-linux" target="_blank">Red Hat Enterprise Linux 7</a> because it would probably be the standard enterprise linux distribution for the next 5-7 years. Of course, you can perform the same actions using CentOS or Fedora 20 releases.</p>
+
+<p>In my case, I have a minimal installation of RHEL7, subscribed to the following repositories (I use <a href="https://access.redhat.com/products/red-hat-satellite" target="_blank">Red Hat Satellite 6</a> as deployment, software and configuration management tool):</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>yum repolist
+Loaded plugins: package_upload, product-id, subscription-manager
+repo id                                               repo name                                                              status
+rhel-7-server-rh-common-rpms/x86_64                   Red Hat Enterprise Linux <span class="m">7</span> Server - RH Common <span class="o">(</span>RPMs<span class="o">)</span>                      68
+rhel-7-server-rpms/x86_64                             Red Hat Enterprise Linux <span class="m">7</span> Server <span class="o">(</span>RPMs<span class="o">)</span>                               4.817
+repolist: 4.885</code></pre></div>
+
+<p>And firewalld and SELinux enabled by default:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>firewall-cmd --list-all
+public <span class="o">(</span>default, active<span class="o">)</span>
+  interfaces: eth0
+  sources: 
+  services: dhcpv6-client ssh
+  ports:
+  masquerade: no
+  forward-ports: 
+  icmp-blocks: 
+  rich rules:
+<span class="nv">$ </span>sestatus
+SELinux status:                 enabled
+SELinuxfs mount:                /sys/fs/selinux
+SELinux root directory:         /etc/selinux
+Loaded policy name:             targeted
+Current mode:                   enforcing
+Mode from config file:          enforcing
+Policy MLS status:              enabled
+Policy deny_unknown status:     allowed
+Max kernel policy version:      28</code></pre></div>
+
+<p>You must install java-openjdk-7, Apache web server and SELinux policy core-utils (this one if you want to keep SELinux enabled, because you will need to restore contexts in future steps):</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>yum install -y java-1.7.0-openjdk httpd policycoreutils-python</code></pre></div>
+
+<p>Also, you may want to open firewalld ports if you want to securize your server:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>firewall-cmd --add-service<span class="o">=</span>http --permanent
+<span class="nv">$ </span>firewall-cmd --permanent --add-port<span class="o">=</span>9200/tcp
+<span class="nv">$ </span>firewall-cmd --permanent --add-port<span class="o">=</span>5000/tcp 
+<span class="nv">$ </span>firewall-cmd --reload
+<span class="nv">$ </span>firewall-cmd --list-all
+public <span class="o">(</span>default, active<span class="o">)</span>
+  interfaces: eth0
+  sources: 
+  services: dhcpv6-client http ssh
+  ports: 9200/tcp 5000/tcp
+  masquerade: no
+  forward-ports: 
+  icmp-blocks: 
+  rich rules:</code></pre></div>
+
+<p><br /></p>
+
+<h3 id="installing-and-configuring-elasticsearch">Installing and configuring Elasticsearch</h3>
+<p>First task is to create the elasticsearch repo in your server to point to the official Elasticsearch distribution:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>rpm --import http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+<span class="nv">$ </span>cat &gt; /etc/yum.repos.d/elasticsearch.repo <span class="s">&lt;&lt; EOF</span>
+<span class="s">[elasticsearch-1.3]</span>
+<span class="s">name=Elasticsearch repository for 1.3.x packages</span>
+<span class="s">baseurl=http://packages.elasticsearch.org/elasticsearch/1.3/centos</span>
+<span class="s">gpgcheck=1</span>
+<span class="s">gpgkey=http://packages.elasticsearch.org/GPG-KEY-elasticsearch</span>
+<span class="s">enabled=1</span>
+<span class="s">EOF</span></code></pre></div>
+
+<p>Then, install the software:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>yum install -y elasticsearch</code></pre></div>
+
+<p>And perform a minimal configuration:
+* Disabling dynamic scripts:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat &gt;&gt; /etc/elasticsearch/elasticsearch.yml <span class="s">&lt;&lt; EOF</span>
+<span class="s">script.disable_dynamic: true</span>
+<span class="s">EOF</span></code></pre></div>
+
+<ul>
+  <li>Restricting external access: to do it, please look for the property ‘network:hosts:‘, uncomment it and give it the value of ‘localhost‘.</li>
+  <li>Disable multicast: Find ‘discovery.ze.ping.multicast.enabled: false‘ and uncomment it.
+Finally, configure systemd to start the daemon at boot time and start the service:</li>
+</ul>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>systemctl daemon-reload
+<span class="nv">$ </span>systemctl <span class="nb">enable </span>elasticsearch.service
+<span class="nv">$ </span>systemctl start elasticsearch.service</code></pre></div>
+
+<blockquote>
+  <p>Note: This is a default installation. To look for default directories, please refer to this <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/setup-dir-layout.html" target="_blank">link</a>.
+<br /></p>
+</blockquote>
+
+<h3 id="installing-and-configuring-kibana">Installing and configuring Kibana</h3>
+<p>Kibana hasn’t got a repository or RPM available, but we can download it executing the following command:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -P /tmp/ https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz
+<span class="nv">$ </span>tar xvf /tmp/kibana-3.1.0.tar.gz<span class="p">;</span> rm -f /tmp/kibana-3.1.0.tar.gz</code></pre></div>
+
+<p>Next, edit ‘kibana-3.1.0/config.js‘ config file, find the line that specifies the elasticsearch server URL and replace the port number 9200 with 80:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">elasticsearch: <span class="s2">&quot;http://&quot;</span>+window.location.hostname+<span class="s2">&quot;:80&quot;</span>,</code></pre></div>
+
+<p>Move the entire directory to /var/www/html/ location and fix SElinux context:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mv kibana-3.1.0/ /var/www/html/kibana3
+<span class="nv">$ </span>restorecon -R /var/www/html/</code></pre></div>
+
+<p>Create the apache VirtualHost configuration file for kibana3 service:</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml"><span class="nt">&lt;VirtualHost</span> <span class="err">elk-rhel7.example.com:80</span><span class="nt">&gt;</span>
+  ServerName elk-rhel7.example.com
+
+  DocumentRoot /var/www/html/kibana3
+  <span class="nt">&lt;Directory</span> <span class="err">/var/www/html/kibana3</span><span class="nt">&gt;</span>
+    Allow from all
+    Options -Multiviews
+  <span class="nt">&lt;/Directory&gt;</span>
+
+  LogLevel debug
+  ErrorLog /var/log/httpd/error_log
+  CustomLog /var/log/httpd/access_log combined
+
+  # Set global proxy timeouts
+  <span class="nt">&lt;Proxy</span> <span class="err">http://127.0.0.1:9200</span><span class="nt">&gt;</span>
+    ProxySet connectiontimeout=5 timeout=90
+  <span class="nt">&lt;/Proxy&gt;</span>
+
+  # Proxy for _aliases and .*/_search
+  <span class="nt">&lt;LocationMatch</span> <span class="err">&quot;^/(_nodes|_aliases|.*/_aliases|_search|.*/_search|_mapping|.*/_mapping)$&quot;</span><span class="nt">&gt;</span>
+    ProxyPassMatch http://127.0.0.1:9200/$1
+    ProxyPassReverse http://127.0.0.1:9200/$1
+  <span class="nt">&lt;/LocationMatch&gt;</span>
+
+  # Proxy for kibana-int/{dashboard,temp} stuff (if you don&#39;t want auth on /, then you will want these to be protected)
+  <span class="nt">&lt;LocationMatch</span> <span class="err">&quot;^/(kibana-int/dashboard/|kibana-int/temp)(.*)$&quot;</span><span class="nt">&gt;</span>
+    ProxyPassMatch http://127.0.0.1:9200/$1$2
+    ProxyPassReverse http://127.0.0.1:9200/$1$2
+  <span class="nt">&lt;/LocationMatch&gt;</span>
+
+  <span class="nt">&lt;Location</span> <span class="nt">/&gt;</span>
+    AuthType Basic
+    AuthBasicProvider file
+    AuthName &quot;Restricted&quot;
+    AuthUserFile /etc/httpd/conf.d/kibana-htpasswd
+    Require valid-user
+  <span class="nt">&lt;/Location&gt;</span>
+<span class="nt">&lt;/VirtualHost&gt;</span></code></pre></div>
+
+<blockquote>
+  <p>Please note that my ELK server is ‘elk-rhel7.example.com‘ and the root-directory is ‘/var/www/html/kibana3‘. put your own requirements as your convenience.</p>
+</blockquote>
+
+<p>Move the VirtualHost configuration file to the Apache configuration folder (and fix SElinux labels):</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">$ mv kibana3.conf /etc/httpd/conf.d/
+$ restorecon -R /etc/httpd/conf.d/
+$ semanage port -a -t http_port_t -p tcp 9200</code></pre></div>
+
+<p>In you want to protect Kibana from unauthorized access, add an htpasswd entry for your user (for example ‘admin’):</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">$ htpasswd -c /etc/httpd/conf.d/kibana-htpasswd admin
+New password: 
+Re-type new password: 
+Adding password for user admin</code></pre></div>
+
+<p>And finally, enable the service at boot time and start it:</p>
+
+<div class="highlight"><pre><code class="language-xml" data-lang="xml">$ systemctl start httpd; systemctl status httpd</code></pre></div>
+
+<p><br /></p>
+
+<h3 id="installing-and-configuring-logstash">Installing and configuring Logstash</h3>
+
+<p>The last step is to install and configure logstash, the responsible to receive and process log traces.
+First, create the repo file to get access to the latest logstash version:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat &gt; /etc/yum.repos.d/logstash.repo <span class="s">&lt;&lt; EOF</span>
+<span class="s">[logstash-1.4]</span>
+<span class="s">name=logstash repository for 1.4.x packages</span>
+<span class="s">baseurl=http://packages.elasticsearch.org/logstash/1.4/centos</span>
+<span class="s">gpgcheck=1</span>
+<span class="s">gpgkey=http://packages.elasticsearch.org/GPG-KEY-elasticsearch</span>
+<span class="s">enabled=1</span>
+<span class="s">EOF</span></code></pre></div>
+
+<p>and install it:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>yum install -y logstash</code></pre></div>
+
+<p>Since we are going to use Logstash Forwarder to ship logs from our Servers to our Logstash Server, we need to create an SSL certificate and key pair. The certificate is used by the Logstash Forwarder to verify the identity of Logstash Server.
+Generate the SSL certificate and private key, in the appropriate locations (/etc/pki/tls/…), with the following command:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">cd</span> /etc/pki/tls
+<span class="nv">$ </span>sudo openssl req -x509 -batch -nodes -days <span class="m">3650</span> -newkey rsa:2048 -keyout private/logstash-forwarder.key -out certs/logstash-forwarder.crt</code></pre></div>
+
+<blockquote>
+  <p>The logstash-forwarder.crt file will be copied to all of the servers that will send logs to Logstash.</p>
+</blockquote>
+
+<p>Make the certificate available via http (to be downloaded by other potential hosts that are going to install logstash forwarder):</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir /var/www/html/kibana3/pub
+<span class="nv">$ </span>cp /etc/pki/tls/certs/logstash-forwarder.crt /var/www/html/kibana3/pub/
+<span class="nv">$ </span>restorecon -R /var/www/html/kibana3</code></pre></div>
+
+<blockquote>
+  <p>From now on, the certificate will be available for every client at: http://elk-rhel7.example.com/pub/logstash-forwarder.crt</p>
+</blockquote>
+
+<p>Create the configuration file for lumberjack protocol (which is used by Logstash forwarders):</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat &gt; /etc/logstash/conf.d/01-lumberjack-input.conf <span class="s">&lt;&lt; EOF</span>
+<span class="s">input {</span>
+<span class="s">  lumberjack {</span>
+<span class="s">    port =&gt; 5000</span>
+<span class="s">    type =&gt; &quot;logs&quot;</span>
+<span class="s">    ssl_certificate =&gt; &quot;/etc/pki/tls/certs/logstash-forwarder.crt&quot;</span>
+<span class="s">    ssl_key =&gt; &quot;/etc/pki/tls/private/logstash-forwarder.key&quot;</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="s">EOF</span></code></pre></div>
+
+<p>This configuration file specifies a lumberjack input that will listen on tcp port 5000, and it will use the SSL certificate and private key that we created earlier.
+Now let’s create a configuration file called 10-syslog.conf, where we will add a filter for syslog messages:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat &gt; /etc/logstash/conf.d/10-syslog.conf <span class="s">&lt;&lt; EOF</span>
+<span class="s">filter {</span>
+<span class="s">  if [type] == &quot;syslog&quot; {</span>
+<span class="s">    grok {</span>
+<span class="s">      match =&gt; { &quot;message&quot; =&gt; &quot;%{SYSLOGTIMESTAMP:syslog_timestamp} %{SYSLOGHOST:syslog_hostname} %{DATA:syslog_program}(?:\[%{POSINT:syslog_pid}\])?: %{GREEDYDATA:syslog_message}&quot; }</span>
+<span class="s">      add_field =&gt; [ &quot;received_at&quot;, &quot;%{@timestamp}&quot; ]</span>
+<span class="s">      add_field =&gt; [ &quot;received_from&quot;, &quot;%{host}&quot; ]</span>
+<span class="s">    }</span>
+<span class="s">    syslog_pri { }</span>
+<span class="s">    date {</span>
+<span class="s">      match =&gt; [ &quot;syslog_timestamp&quot;, &quot;MMM  d HH:mm:ss&quot;, &quot;MMM dd HH:mm:ss&quot; ]</span>
+<span class="s">    }</span>
+<span class="s">  }</span>
+<span class="s">}</span>
+<span class="s">EOF</span></code></pre></div>
+
+<p>This filter looks for logs that are labeled as “syslog” type (by a logstash-forwarder), and it will try to use “grok” to parse incoming syslog logs to make it structured and query-able.</p>
+
+<p>Lastly, we will create a configuration file called 30-lumberjack-output.conf, that basically configures Logstash to store the logs in Elasticsearch:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>cat &gt; /etc/logstash/conf.d/30-lumberjack-output.conf <span class="s">&lt;&lt; EOF</span>
+<span class="s">output {</span>
+<span class="s">  elasticsearch { host =&gt; localhost }</span>
+<span class="s">  stdout { codec =&gt; rubydebug }</span>
+<span class="s">}</span>
+<span class="s">EOF</span></code></pre></div>
+
+<p>One of the last steps is to restart the logstash service to apply changes (please, be aware that logstash is not systemd compliant):</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>chkconfig logstash on<span class="p">;</span> service logstash restart</code></pre></div>
+
+<p>And finally, share the following files from your elk-server to any potential host-client in your network:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -P /var/www/html/kibana3/pub/ http://packages.elasticsearch.org/logstashforwarder/centos/logstash-forwarder-0.3.1-1.x86_64.rpm<span class="p">;</span>
+<span class="nv">$ </span>wget -P /var/www/html/kibana3/pub/ http://logstashbook.com/code/4/logstash_forwarder_redhat_init
+<span class="nv">$ </span>wget -P /var/www/html/kibana3/pub/ http://logstashbook.com/code/4/logstash_forwarder_redhat_sysconfig
+<span class="nv">$ </span>restorecon -R /var/www/html/kibana3/</code></pre></div>
+
+<p>Where:
+* logstash-forwarder-0.3.1-1.x86_64.rpm: Package for logstash-forwarder agent.
+* logstash_forwarder_redhat_init: Example of init.d script for logstash-forwarder.
+* logstash_forwarder_redhat_sysconfig: Config file for logstash-forwarder.
+<br /></p>
+
+<h3 id="install-and-configure-logstash-forwarder-on-your-hostsclients">Install and configure logstash-forwarder on your hosts/clients</h3>
+<p>The main reason to share the files described above is to easily perform the following steps.
+First, you must install Logstash Forwarder package:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -P /tmp/ --user<span class="o">=</span><span class="se">\&lt;</span>user&gt; --password<span class="o">=</span><span class="se">\&lt;</span>pass&gt; http://elk-rhel7.example.com/pub/logstash-forwarder-0.3.1-1.x86_64.rpm
+<span class="nv">$ </span>yum localinstall /tmp/logstash-forwarder-0.3.1-1.x86_64.rpm
+<span class="nv">$ </span>rm -f /tmp/logstash-forwarder-0.3.1-1.x86_64.rpm</code></pre></div>
+
+<p>Then, download the logstash-forwarder init script and config file:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -O /etc/init.d/logstash-forwarder --user<span class="o">=</span><span class="se">\&lt;</span>user<span class="se">\&gt;</span> --password<span class="o">=</span><span class="se">\&lt;</span>pass<span class="se">\&gt;</span> http://elk-rhel7.example.com/pub/logstash_forwarder_redhat_init
+<span class="nv">$ </span>chmod +x /etc/init.d/logstash-forwarder
+<span class="nv">$ </span>wget -O /etc/sysconfig/logstash-forwarder --user<span class="o">=</span><span class="se">\&lt;</span>user<span class="se">\&gt;</span> --password<span class="o">=</span><span class="se">\&lt;</span>pass<span class="se">\&gt;</span> http://elk-rhel7.example.com/pub/logstash_forwarder_redhat_sysconfig</code></pre></div>
+
+<p>Copy the SSL certificate into the appropriate location (/etc/pki/tls/certs):</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>wget -P /etc/pki/tls/certs/ --user<span class="o">=</span><span class="se">\&lt;</span>user<span class="se">\&gt;</span> --password<span class="o">=</span><span class="se">\&lt;</span>pass<span class="se">\&gt;</span> http://elk-rhel7.example.com/pub/logstash-forwarder.crt</code></pre></div>
+
+<p>And create (or download from logstash-server at http://elk-rhel7.example.com/pub/logstash-forwarder) the logstash-forwarder config file:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>mkdir -P /etc/logstash-forwarder
+<span class="nv">$ </span>cat &gt; /etc/logstash-forwarder/logstash-forwarder.conf <span class="s">&lt;&lt; EOF</span>
+<span class="s">{</span>
+<span class="s">  &quot;network&quot;: {</span>
+<span class="s">    &quot;servers&quot;: [ &quot;192.168.100.10:5000&quot; ],</span>
+<span class="s">    &quot;timeout&quot;: 15,</span>
+<span class="s">    &quot;ssl ca&quot;: &quot;/etc/pki/tls/certs/logstash-forwarder.crt&quot;</span>
+<span class="s">  },</span>
+<span class="s">  &quot;files&quot;: [</span>
+<span class="s">    {</span>
+<span class="s">      &quot;paths&quot;: [</span>
+<span class="s">        &quot;/var/log/messages&quot;,</span>
+<span class="s">        &quot;/var/log/secure&quot;</span>
+<span class="s">       ],</span>
+<span class="s">      &quot;fields&quot;: { &quot;type&quot;: &quot;syslog&quot; }</span>
+<span class="s">    }</span>
+<span class="s">   ]</span>
+<span class="s">}</span>
+<span class="s">EOF</span></code></pre></div>
+
+<blockquote>
+  <p>The internal IP-Address of my logstash-server is 192.168.100.10.</p>
+</blockquote>
+
+<p>This configures Logstash Forwarder to connect to your Logstash Server on port 5000 (the port that we specified an input for earlier), and uses the SSL certificate that we created earlier.
+The paths section specifies which log files to send (here we specify messages and secure), and the type section specifies that these logs are of type “syslog* (which is the type that our filter is looking for).</p>
+
+<blockquote>
+  <p>This is where you would add more files/types to configure Logstash Forwarder to other log files to Logstash on port 5000.</p>
+</blockquote>
+
+<p>Finally, lets activate Logstash-Forwarder on boot and start the service:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span>chkconfig --add logstash-forwarder
+<span class="nv">$ </span>service logstash-forwarder start</code></pre></div>
+
+<p>You should see now that log events are forwarded to your elk-server accessing to the Kibana Dashboard (in my case):</p>
+
+<div class="highlight"><pre><code class="language-html" data-lang="html">http://elk-rhel7.example.com/index.html#/dashboard/file/logstash.json</code></pre></div>
+
+<figure><img src="/images/elk-pic1.jpg" /></figure>
+<p><br /></p>
+
+<h2 id="are-you-a-jboss-eap-admin">Are you a JBoss EAP admin?</h2>
+<p>Maybe your are interested on centralize JBoss EAP log files and metrics. If so, please check <a href="https://plus.google.com/+JochenCordes" target="_blank">Jochen Cordes</a> Blog’s <a href="http://jcordes73.blogspot.com.es/2014/11/using-elks-jmx-plugin-to-gather-jboss.html" target="_blank">post</a> where you can find useful information about it.
+<br /></p>
+
+<h2 id="deep-dive">Deep dive</h2>
+
+<p class="notice">If you want to go further, I suggest you to go to the <a href="http://www.elasticsearch.org/resources/" target="_blank">Elasticsearch Resources</a> page and regist to one of the scheduled <a href="http://purchases.elasticsearch.com/" target="_blank">trainings</a> on your hometown or next to it. For example: <a href="https://purchases.elasticsearch.com/static/pdf/Elasticsearch-Core-Outline.pdf" target="_blank">Elasticsearch Core Outline</a> or <a href="https://purchases.elasticsearch.com/static/pdf/Workshop-Outline.pdf" target="_blank">Getting started workshop</a>.</p>
+
+<p class="notice">There is a nice O’Reilly book just to be released: <a href="http://www.elasticsearch.org/blog/elasticsearch-definitive-guide/" target="_blank">Elasticsearch: The Definitive Guide.</a></p>
+
+      <hr />
+      <footer role="contentinfo">
+        <div class="social-share">
+  <h4>Share on</h4>
+  <ul>
+    <li>
+      <a href="https://twitter.com/intent/tweet?text=/elk/" class="twitter" title="Share on Twitter"><i class="fa fa-twitter"></i><span> Twitter</span></a>
+    </li>
+    <li>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=/elk/" class="facebook" title="Share on Facebook"><i class="fa fa-facebook"></i><span> Facebook</span></a>
+    </li>
+    <li>
+      <a href="https://plus.google.com/share?url=/elk/" class="google-plus" title="Share on Google Plus"><i class="fa fa-google-plus"></i><span> Google+</span></a>
+    </li>
+  </ul>
+</div><!-- /.social-share -->
+        <p class="byline"><strong>Improving log-analysis capabilities with logstash + elasticsearch + kibana</strong> was published on <time datetime="2014-09-28T00:00:00+02:00">September 28, 2014</time> and last modified on <time datetime="2015-03-08">March 08, 2015</time>.</p>
+      </footer>
+    </div><!-- /.article-wrap -->
+  
+  </article>
+</div><!-- /#main -->
+
+<div class="footer-wrap">
+  <div class="related-articles">
+  <h4>You might also enjoy <small class="pull-right">(<a href="/posts/">View all posts</a>)</small></h4>
+    <ul>
+    
+      <li><a href="/owncloud/" title="Creating your own cloud using Fedora and ownCloud">Creating your own cloud using Fedora and ownCloud</a></li>
+    
+      <li><a href="/motog/" title="How to flash Motorola Moto G (factory image)">How to flash Motorola Moto G (factory image)</a></li>
+    
+    </ul>
+    <hr />
+  </div><!-- /.related-articles -->
+  <footer>
+    
+
+<span>&copy; 2015 Carlos Spitzer. <br> Hosted on <a href="http://www.openshift.com" rel="nofollow" target="_blank">OpenShift</a> and powered by <a href="http://jekyllrb.com" rel="nofollow" target="_blank">Jekyll</a> using the <a href="http://mademistakes.com/minimal-mistakes/" rel="nofollow" target="_blank">Minimal Mistakes</a> theme.</br></span>
+
+  </footer>
+</div><!-- /.footer-wrap -->
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/assets/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+<script src="/assets/js/scripts.min.js"></script>
+
+
+  
+	        
+
+</body>
+</html>
