@@ -10,12 +10,12 @@ url:              http://lestrade84.github.io
 permalink:   /:categories/:title/
 markdown:    kramdown
 highlighter: pygments
-safe: false
 sass:
   sass_dir: _sass
   style: compressed
 gems:
   - jekyll-sitemap
+  - jekyll-redirect-from
 
 kramdown:
   auto_ids: true
