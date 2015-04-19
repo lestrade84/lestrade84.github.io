@@ -24,8 +24,7 @@ $margin: 0;
 @mixin grid($grid:$def_grid,$cols:'',$float:left,$display:inline){
   display:$display;
   float:$float;
-  width:(100%/$grid * $cols) - $margin;
-  /* width:(100%/$grid * $cols) - ($margin * 2); */
+  width:(100%/$grid * $cols) - ($margin * 2);
 }  
 
 /* 
