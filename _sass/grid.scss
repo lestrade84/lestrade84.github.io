@@ -7,7 +7,7 @@
    Common values would be 12, 16 or 24
    ========================================================================== */
 
-$width: 120%;
+$width: 100%;
 $def_grid: 12;
 $margin: 0;
 
@@ -24,7 +24,8 @@ $margin: 0;
 @mixin grid($grid:$def_grid,$cols:'',$float:left,$display:inline){
   display:$display;
   float:$float;
-  width:(100%/$grid * $cols) - ($margin * 2);
+  width:(100%/$grid * $cols);
+  /* width:(100%/$grid * $cols) - ($margin * 2); */
 }  
 
 /* 
