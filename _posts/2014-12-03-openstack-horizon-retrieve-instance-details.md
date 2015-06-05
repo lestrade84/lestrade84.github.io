@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Fix ``Unable to retrieve details for instance XXX`` Horizon error message
+title: Fix "Unable to retrieve details for instance XXX" OpenStack dashboard error message
 modified: 2015-03-11
 author: carlos_spitzer
-tags: [openstack, horizon, mariadb, nova, cinder, error]
+tags: [openstack, horizon, dashboard, mariadb, nova, cinder, error]
 comments: true
 image:
   feature: openstack-banner.jpg
