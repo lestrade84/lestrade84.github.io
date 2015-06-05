@@ -34,6 +34,8 @@ Before go out mongoDB interpreter, check if everything is OK now:
 rs.status()
 {% endhighlight %}
 
+---
+
 If you want to go further, I suggest you to check this <a href="http://docs.mongodb.org/manual/tutorial/change-hostnames-in-a-replica-set/" target="_blank">post.</a>
 {: .notice}
 
