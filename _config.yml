@@ -32,14 +32,14 @@ owner:
   email: "me@carlos-spitzer.com"
   disqus-shortname: lestrade84
   twitter: lestrade84
-  facebook: #username
+  facebook: lestrade84
   google:
     plus: CarlosSpitzerLopez
     analytics: UA-60513855-1
-    verify: 
-    ad-client: 
-    ad-slot: 
-  bing-verify: 
+    verify:
+    ad-client:
+    ad-slot:
+  bing-verify:
   github: lestrade84
   stackoverflow: #http://stackoverflow.com/users/123456/username
   linkedin: carlosspitzerlopez
@@ -51,10 +51,10 @@ owner:
   foursquare: #username
   steam: lestrade84
   dribbble: #username
-  youtube: #username
+  youtube: CarlosSpitzerLopez
   soundcloud: #username
   weibo: #username
-  flickr: #username
+  flickr: lestrade84
 
 include: [".htaccess"]
 exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
