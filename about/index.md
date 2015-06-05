@@ -11,7 +11,7 @@ image:
 ---
 
 Videogames, Photography and Travels are my main hobbies (yes, in this order). Former basketball player (NBA addict), I give my world for a good coffee.
-My favourite music bands are Imagine Dragons, 30 Seconds to Mars, Cold Play and Sia.
+My favourite music bands are Mumford & Sons, Imagine Dragons, 30 Seconds to Mars and Cold Play.
 
 ## Senior Consultant working at Red Hat:
 
