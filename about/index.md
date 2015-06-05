@@ -32,7 +32,9 @@ Ups! Almost forgot.. and manage customer's expectations.
     * Red Hat Enterprise Virtualization (oVirt)
     * Docker
 
+<BR>
+
 ---
 
-<BR><BR>
+<BR>
 <a markdown="0" href="http://es.linkedin.com/in/carlosspitzerlopez/en" class="btn" target="_blank">More</a>
