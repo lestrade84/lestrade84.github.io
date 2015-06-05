@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How to change hostnames in a MongoDB replica set
-modified: 2014-11-15
+modified: 2015-03-10
 author: carlos_spitzer
 tags: [mongodb, replicaset, hostname]
 comments: true
@@ -33,9 +33,6 @@ Before go out mongoDB interpreter, check if everything is OK now:
 {% highlight bash %}
 rs.status()
 {% endhighlight %}
-
-
-## Deep dive
 
 If you want to go further, I suggest you to check this <a href="http://docs.mongodb.org/manual/tutorial/change-hostnames-in-a-replica-set/" target="_blank">post.</a>
 {: .notice}
