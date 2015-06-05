@@ -43,6 +43,8 @@ In order to fix this problem, you have two alternatives:
 The affected table is "block_device_mapping" belonging to Nova database.
 
 <br>
+<br>
+
 ### The easy way
 
 Check how many entries already have this status:
@@ -58,6 +60,8 @@ MariaDB [nova]> delete from nova.block_device_mapping where volume_id in (select
 {% endhighlight %}
 
 <br>
+<br>
+
 ### The ninja way
 
 With this method, you must update some Nova database entries too.
