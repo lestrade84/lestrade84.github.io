@@ -42,6 +42,7 @@ In order to fix this problem, you have two alternatives:
 
 The affected table is "block_device_mapping" belonging to Nova database.
 
+<br>
 ### The easy way
 
 Check how many entries already have this status:
@@ -56,6 +57,7 @@ And fix it:
 MariaDB [nova]> delete from nova.block_device_mapping where volume_id in (select id from cinder.volumes where status='deleted') and deleted=0;
 {% endhighlight %}
 
+<br>
 ### The ninja way
 
 With this method, you must update some Nova database entries too.
