@@ -42,8 +42,7 @@ In order to fix this problem, you have two alternatives:
 
 The affected table is "block_device_mapping" belonging to Nova database.
 
-<br>
-<br>
+<hr align="center" noshade="noshade" size="2" width="100%" />
 
 ### The easy way
 
@@ -59,8 +58,7 @@ And fix it:
 MariaDB [nova]> delete from nova.block_device_mapping where volume_id in (select id from cinder.volumes where status='deleted') and deleted=0;
 {% endhighlight %}
 
-<br>
-<br>
+<hr align="center" noshade="noshade" size="2" width="100%" />
 
 ### The ninja way
 
