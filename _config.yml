@@ -51,10 +51,10 @@ owner:
   foursquare: #username
   steam: lestrade84
   dribbble: #username
-  youtube: CarlosSpitzerLopez
+  youtube: UC7CQkQN8DAtSwwadYAW15_g
   soundcloud: #username
   weibo: #username
-  flickr: lestrade84
+  flickr: carlos-spitzer
 
 include: [".htaccess"]
 exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]
