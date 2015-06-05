@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Delete cinder orphan volumes
+title: Delete cinder's orphan volumes
 modified: 2015-03-12
 author: carlos_spitzer
 tags: [openstack, cinder, volumes, mariadb, orphan, error]
@@ -11,9 +11,7 @@ image:
 
 Sometimes you may find that there are orphan cinder volumes.  
 What is an "orphan" volume? It is a volume that is not effectively attached to an instance but the database doesn't reflect the current status of the volume.  
-
-<br>
-
+  
 First, we must clean and update database entries:
 
 {% highlight bash %}
