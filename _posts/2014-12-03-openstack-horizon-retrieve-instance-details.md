@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Fix "Unable to retrieve details for instance <instance_id>" Horizon error message
+title: Fix "Unable to retrieve details for instance XXX" Horizon error message
 modified: 2015-03-11
 author: carlos_spitzer
 tags: [openstack, horizon, mariadb, nova, cinder, error]
@@ -11,7 +11,7 @@ image:
 
 Sometimes you may find the following error message when you try to access to an OpenStack instance:
 
-<figure><img src="{{ site.url }}/images/horizon-retrieve-instance-error.jpg"></figure>
+<figure><img align="center" src="{{ site.url }}/images/horizon-retrieve-instance-error.jpg"></figure>
 
 This is a generic error that sometimes is related with the metadata of the affected instance.  
 A good practice is to check what is the current status of the instance:
@@ -60,7 +60,7 @@ MariaDB [nova]> delete from nova.block_device_mapping where volume_id in (select
 
 With this method, you must update some Nova database entries too.
 
-{% highlight mysql %}
+```
 MariaDB [nova]> describe block_device_mapping; 
 
 +-----------------------+--------------+------+-----+---------+----------------+ 
@@ -87,11 +87,11 @@ MariaDB [nova]> describe block_device_mapping;
 | boot_index            | int(11)      | YES  |     | NULL    |                | 
 | image_id              | varchar(36)  | YES  |     | NULL    |                | 
 +-----------------------+--------------+------+-----+---------+----------------+
-{% endhighlight %}
+```
 
 If we execute the following query, we may find the issue:
 
-{% highlight mysql %}
+```
 MariaDB [nova]> select id,volume_id,deleted_at from block_device_mapping where instance_uuid='99fd0970-d348-495b-a9ed-39555e839c9e'; 
 
 +------+--------------------------------------+------------+ 
@@ -111,11 +111,11 @@ MariaDB [nova]> select id,volume_id,deleted_at from block_device_mapping where i
 | 3936 | 3abba94a-cb3f-4b25-82e0-1197f9f0c365 | NULL       | 
 | 3939 | 2594fa29-a144-4c4d-b2ae-b9eed6d6ec7c | NULL       | 
 +------+--------------------------------------+------------+
-{% endhighlight %}
+```
 
 We must change these entries to NULL:
 
-{% highlight bash %}
+```
 MariaDB [nova]> delete from block_device_mapping where id='3888'; 
 Query OK, 1 row affected (0.15 sec) 
 
@@ -142,6 +142,6 @@ MariaDB [nova]> select id,volume_id,deleted_at from block_device_mapping where i
 | 3939 | 2594fa29-a144-4c4d-b2ae-b9eed6d6ec7c | NULL       | 
 +------+--------------------------------------+------------+ 
 10 rows in set (0.00 sec)
-{% endhighlight %}
+```
 
 After these changes, we go to OpenStack dashboard again and click on the affected instance. We should access to it now.
