@@ -30,7 +30,7 @@ Ups! Almost forgot.. and manage customer's expectations.
     * Puppet
 * Virtualization & Containers:
     * Red Hat Enterprise Virtualization (oVirt)
-    * Docker
+    * Docker & Kubernetes
 
 <BR>
 
