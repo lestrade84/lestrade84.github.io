@@ -1,13 +1,11 @@
 ---
 layout: page
 title: Some lines about me...
-tags: [about, Carlos, Spitzer]
+tags: [about, aboutme, Carlos, Spitzer]
 modified: 2014-03-08T11:10:00.573882-04:00
 comments: false
 image:
   feature: about-banner.jpg
-  credit: Pexels
-  creditlink: http://www.pexels.com
 ---
 
 Videogames, Photography and Travels are my main hobbies (yes, in this order). Former basketball player (NBA addict), I give my world for a good coffee.  
