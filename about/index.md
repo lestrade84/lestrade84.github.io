@@ -37,4 +37,4 @@ Ups! Almost forgot.. and manage customer's expectations.
 ---
 
 <BR>
-<a markdown="0" href="http://es.linkedin.com/in/carlosspitzerlopez/en" class="btn" target="_blank">More</a>
+<a markdown="0" href="http://www.carlos-spitzer.com" class="btn" target="_blank">Website</a>
