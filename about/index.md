@@ -11,6 +11,8 @@ image:
 Videogames, Photography and Travels are my main hobbies (yes, in this order). Former basketball player (NBA addict), I give my world for a good coffee.  
 My favourite music bands are <a href="http://www.mumfordandsons.com/" target="_blank">Mumford & Sons</a>, <a href="http://www.imaginedragonsmusic.com/" target="_blank">Imagine Dragons</a>, <a href="http://www.thirtysecondstomars.com/" target="_blank">30 Seconds to Mars</a> and <a href="http://www.coldplay.com/" target="_blank">Cold Play</a>.
 
+---
+
 ## Senior Consultant working at Red Hat:
 
 I am interested in technology research and design, Big Data, Cloud Computing, Cloud Infrastructures and engineering processes.  
