@@ -20,24 +20,20 @@ My favourite music bands are:
 
 ---
 
-## Senior Consultant working at Red Hat:
+## Technical Project Manager working at Red Hat:
 
-I am interested in technology research and design, Big Data, Cloud Computing, Cloud Infrastructures and engineering processes.  
+I am interested in technology research and development, Cloud Computing, Cloud Infrastructure and disruptive technologies and methodologies.
 My career is developed on technology services, virtualization, cloud architectures and sometimes even scripting!  
-Ups! Almost forgot.. and manage customer's expectations.
+Ups! Almost forgot.. I usually manage customer's expectations and success stories.
 
+* Methodologies:
+    * Agile (SCRUM & KANBAN).
+    * Waterfall (not my preferred one)
 * Cloud Technologies:
     * OpenStack
     * OpenShift
-* Storage:
-    * Ceph
-    * Gluster
-* Infrastructure and automation:
-    * Red Hat Satellite (Foreman & Katello)
-    * Puppet
-* Virtualization & Containers:
-    * Red Hat Enterprise Virtualization (oVirt)
-    * Docker & Kubernetes
+* Infrastructure and automation
+* Virtualization & Containers
 
 <BR>
 
