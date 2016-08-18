@@ -8,7 +8,7 @@ image:
   feature: about-banner.jpg
 ---
 
-Videogames, Photography and Travels are my main hobbies (yes, in this order). Former basketball player (NBA addict), I give my world for a good coffee.  
+Videogames, Traveling and Photography are my main hobbies (yes, in this order). Former basketball player (NBA addict), giving my world for a good coffee.  
 My favourite music bands are:
 
 * <a href="http://www.mumfordandsons.com/" target="_blank">Mumford & Sons</a>
@@ -20,18 +20,20 @@ My favourite music bands are:
 
 ---
 
-## Technical Project Manager working at Red Hat:
+## Territory Services Manager working at Red Hat:
 
-I am interested in technology research and development, Cloud Computing, Cloud Infrastructure and disruptive technologies and methodologies.
-My career is developed on technology services, virtualization, cloud architectures and sometimes even scripting!  
+I am interested in technology & people, virtualization and cloud projects (SaaS, IaaS and PaaS), development and consultative selling processes. I am a self-organized employee, with high adaptability to continuous changes, with attention to detail. Highly motivated to work in a leading technology company & team-worker.
+I have been working on Linux and OpenSource technologies since my graduation. Now I am exploring new challenges: Share my technical knowledge and help others to grow with my current role as a trusted advisor and mentor, helping my company to create innovative solutions for our customers.
+
 Ups! Almost forgot.. I usually manage customer's expectations and success stories.
 
 * Methodologies:
     * Agile (SCRUM & KANBAN).
     * Waterfall (not my preferred one)
 * Cloud Technologies:
-    * OpenStack
-    * OpenShift
+    * OpenStack (IaaS)
+    * OpenShift (PaaS)
+    * Google for Work (SaaS)
 * Infrastructure and automation
 * Virtualization & Containers
 
